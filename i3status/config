@@ -16,14 +16,15 @@ general {
 	interval = 2
 }
 
-order += "volume master"
-order += "load"
-order += "disk /"
-order += "disk /media/media"
-order += "ethernet eth0"
 order += "tztime local"
-order += "ipv6"
+order += "battery 1"
+order += "cpu_usage"
+order += "volume master"
+order += "disk /"
+order += "disk /home"
 order += "run_watch DHCP"
+order += "ethernet eth0"
+order += "ipv6"
 order += "run_watch VPN"
 order += "wireless wlan0"
 
@@ -34,24 +35,6 @@ volume master {
 	mixer_idx = 0
 	# termsyn font
 #	format = "À %volume "
-}
-
-load {
-#	format = " Δ: %1min "
-	# termsyn font
-	format = " Î %1min"
-}
-
-cpu_usage {
-	format = "%usage "
-}
-
-disk "/" {
-	format = " ¨ %avail:/ "
-}
-
-disk "/media/media" {
-	format = " ¨ %avail:m "
 }
 
 wireless wlan0 {
@@ -83,3 +66,33 @@ tztime local {
 #	format = " %h-%d É %H:%M  ¸ ÈÈÈ È "
 }
 
+battery 1 {
+#   format = "%status %percentage %remaining %emptytime"
+    format = " %status %percentage"
+    format_down = "No battery"
+    last_full_capacity = true
+    integer_battery_capacity = true
+#   status_chr = ""
+    status_chr = "⚡"
+    status_bat = ""
+#   status_bat = "bat"
+#   status_bat = "☉"
+#   status_full = ""
+    status_full = "☻"
+        low_threshold = 15
+    threshold_type = time
+    path = "/sys/class/power_supply/BAT0/uevent"
+}
+
+cpu_usage {
+format = " cpu  %usage "
+}
+
+disk "/" {
+# format = " hdd %avail "
+format = " ⛁ %avail "
+}
+
+disk "/home" {
+format = " /home %avail "
+}
